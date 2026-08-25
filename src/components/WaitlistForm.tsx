@@ -103,14 +103,12 @@ export function WaitlistForm() {
     <form onSubmit={onSubmit} className="rounded-2xl border border-zinc-800 bg-zinc-900/60 backdrop-blur p-5 sm:p-6 shadow-2xl shadow-black/40" noValidate>
       <div className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-xs font-medium tracking-wide text-zinc-400 uppercase mb-2">
-            Full name
-          </label>
           <input
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Alex Rivera"
+            placeholder="Name"
+            aria-label="Name"
             required
             minLength={2}
             maxLength={60}
@@ -119,15 +117,13 @@ export function WaitlistForm() {
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-xs font-medium tracking-wide text-zinc-400 uppercase mb-2">
-            Email address
-          </label>
           <input
             id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="alex@company.com"
+            placeholder="Email"
+            aria-label="Email"
             required
             autoComplete="email"
             className="w-full rounded-xl bg-zinc-950 border border-zinc-800 px-4 py-3.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition"
