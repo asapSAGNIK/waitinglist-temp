@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import CursorRingField from "@/components/ui/cursor-ring-field";
 
 type Entry = {
   id: string;
@@ -89,13 +90,28 @@ export function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-zinc-100">
+    <div className="min-h-screen bg-[#09090b] text-zinc-100 overflow-hidden relative">
+      <CursorRingField
+        density={240}
+        dotSize={90}
+        speed={13}
+        cameraDistance={120}
+        colors={["#00FFDA", "#FFF500"]}
+        style={{ position: "fixed", inset: 0, opacity: 0.5 }}
+      />
       <header className="sticky top-0 z-10 backdrop-blur-xl bg-zinc-950/60 border-b border-zinc-800">
         <div className="mx-auto max-w-6xl px-6 h-[64px] flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-600 to-cyan-400 flex items-center justify-center font-bold text-white text-sm">◆</div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/Uphook%20logo.png"
+              alt="Uphook logo"
+              className="h-8 w-8 object-contain rounded-lg"
+              width={32}
+              height={32}
+            />
             <div>
-              <div className="text-sm font-semibold tracking-tight text-white">Waitlist Admin</div>
+              <div className="text-sm font-semibold tracking-tight text-white">Uphook</div>
               <div className="text-xs text-zinc-500 hidden sm:block">{count} total signups • {entries.length} shown</div>
             </div>
           </div>
@@ -109,9 +125,9 @@ export function AdminDashboard() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-6 py-8">
+      <main className="relative z-10 mx-auto max-w-6xl px-6 py-8">
         {/* stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
             <div className="text-xs tracking-widest uppercase font-semibold text-zinc-500">Total signups</div>
             <div className="mt-2 text-3xl font-bold tracking-tight text-white">{count}</div>
@@ -121,13 +137,6 @@ export function AdminDashboard() {
             <div className="text-xs tracking-widest uppercase font-semibold text-zinc-500">Latest</div>
             <div className="mt-2 text-sm font-medium text-white truncate">{entries[0]?.email || "—"}</div>
             <div className="text-xs text-zinc-500 mt-1">{entries[0] ? new Date(entries[0].created_at).toLocaleString() : "No entries yet"}</div>
-          </div>
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
-            <div className="text-xs tracking-widest uppercase font-semibold text-zinc-500">Queue range</div>
-            <div className="mt-2 text-sm font-mono text-white">
-              {entries.length ? `#${Math.min(...entries.map((e) => e.position))} — #${Math.max(...entries.map((e) => e.position))}` : "—"}
-            </div>
-            <div className="text-xs text-zinc-500 mt-1">Min — Max position</div>
           </div>
         </div>
 
@@ -147,7 +156,7 @@ export function AdminDashboard() {
         </form>
 
         {/* table */}
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden backdrop-blur">
+        <div className="relative z-10 rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden backdrop-blur">
           {loading ? (
             <div className="p-12 text-center">
               <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-zinc-700 border-t-white mb-3" />
@@ -222,10 +231,6 @@ export function AdminDashboard() {
             </div>
           )}
         </div>
-
-        <p className="mt-4 text-center text-xs text-zinc-600">
-          Protected route • <code className="bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">/admin</code> • Data from Supabase <code className="bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">public.waitlist</code>
-        </p>
       </main>
     </div>
   );

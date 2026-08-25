@@ -158,9 +158,7 @@ export function WaitlistForm() {
           )}
         </button>
 
-        <p className="text-center text-xs leading-5 text-zinc-500">
-          No spam. Unsubscribe anytime. By joining you agree to be notified at launch.
-        </p>
+
       </div>
     </form>
   );
