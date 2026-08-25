@@ -62,12 +62,12 @@ export default function Home() {
   return (
     <div className="flex min-h-[100dvh] min-h-screen flex-col bg-[#09090b] text-zinc-100 overflow-x-hidden">
       <CursorRingField
-        density={isMobile ? 90 : 240}
-        dotSize={isMobile ? 60 : 90}
-        speed={isMobile ? 8 : 13}
-        cameraDistance={120}
+        density={isMobile ? 160 : 240}
+        dotSize={isMobile ? 160 : 90}
+        speed={isMobile ? 12 : 13}
+        cameraDistance={isMobile ? 180 : 120}
         colors={["#00FFDA", "#FFF500"]}
-        style={{ position: "fixed", inset: 0, opacity: 0.5 }}
+        style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, opacity: isMobile ? 0.9 : 0.5, pointerEvents: "none" }}
       />
 
       <main className="relative z-10 flex flex-1 items-center justify-center px-4 sm:px-6">
@@ -87,7 +87,7 @@ export default function Home() {
 
           {/* heading — matched to timer/field width (440px) */}
           <h1 className="mt-6 sm:mt-8 font-['Satoshi',sans-serif] w-full max-w-[440px] text-center text-[2.92rem] leading-[0.95] sm:text-[3.45rem] md:text-[4.05rem] lg:text-[4.42rem] xl:text-[4.72rem] font-bold tracking-[-0.03em] text-[#F6F7ED] whitespace-nowrap">
-            Jobs That Fit
+            Jobs That <span className="italic">Fit</span>
           </h1>
 
           {/* launch timer — matched to field width (440px) */}
