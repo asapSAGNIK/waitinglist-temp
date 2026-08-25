@@ -127,22 +127,14 @@ export function WaitlistForm() {
         />
       </div>
 
-      {error && (
-        <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-300">{error}</div>
-      )}
-
       <div className="buttons">
         <button type="submit" disabled={loading}>
           <span></span>
           <p data-title="Join The Waitlist" data-text="Join The Waitlist"></p>
-          {loading && (
-            <span className="absolute inset-0 flex items-center justify-center bg-[#F6F7ED] text-[#171717] z-20">
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-zinc-400 border-t-[#171717] mr-2" />
-              Securing...
-            </span>
-          )}
         </button>
       </div>
+
+      {error && <p className="mt-1 text-sm text-red-500 text-center">{error}</p>}
 
       <style>{`
         .field {
