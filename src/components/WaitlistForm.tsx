@@ -101,62 +101,200 @@ export function WaitlistForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="rounded-2xl border border-zinc-800 bg-zinc-900/60 backdrop-blur p-5 sm:p-6 shadow-2xl shadow-black/40" noValidate>
-      <div className="space-y-4">
-        <div>
-          <input
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Name"
-            aria-label="Name"
-            required
-            minLength={2}
-            maxLength={60}
-            autoComplete="name"
-            className="w-full rounded-xl bg-zinc-950 border border-zinc-800 px-4 py-3.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition"
-          />
-        </div>
-        <div>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            aria-label="Email"
-            required
-            autoComplete="email"
-            className="w-full rounded-xl bg-zinc-950 border border-zinc-800 px-4 py-3.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition"
-          />
-        </div>
+    <form onSubmit={onSubmit} className="flex flex-col gap-[10px] w-full bg-transparent" noValidate>
+      <div className="field">
+        <input
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Name"
+          aria-label="Name"
+          required
+          minLength={2}
+          maxLength={60}
+          autoComplete="name"
+          className="input-field"
+        />
+      </div>
+      <div className="field">
+        <input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          aria-label="Email"
+          required
+          autoComplete="email"
+          className="input-field"
+        />
+      </div>
 
-        {error && (
-          <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-300">{error}</div>
-        )}
+      {error && (
+        <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-300">{error}</div>
+      )}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white text-zinc-950 px-5 py-3.5 text-sm font-semibold hover:bg-zinc-100 disabled:opacity-60 disabled:cursor-not-allowed transition shadow-lg shadow-white/5"
-        >
-          {loading ? (
-            <>
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-zinc-300 border-t-zinc-900" />
-              Securing your spot...
-            </>
-          ) : (
-            <>
-              Join the waitlist
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-60">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </>
+      <div className="buttons">
+        <button type="submit" disabled={loading}>
+          <span></span>
+          <p data-title="Join The Waitlist" data-text="Join The Waitlist"></p>
+          {loading && (
+            <span className="absolute inset-0 flex items-center justify-center bg-[#F6F7ED] text-[#171717] z-20">
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-zinc-400 border-t-[#171717] mr-2" />
+              Securing...
+            </span>
           )}
         </button>
-
-
       </div>
+
+      <style>{`
+        .field {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5em;
+          border-radius: 25px;
+          padding: 0.6em;
+          border: none;
+          outline: none;
+          color: white;
+          background-color: #171717;
+          box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+        }
+        .input-field {
+          background: none;
+          border: none;
+          outline: none;
+          width: 100%;
+          color: #d3d3d3;
+          font-size: 14px;
+        }
+        .input-field::placeholder {
+          color: #8a8a8a;
+        }
+        /* Nawsome button — adapted to #F6F7ED */
+        .buttons {
+          display: flex;
+          justify-content: center;
+          top: 20px;
+          left: 20px;
+          width: 100%;
+        }
+        .buttons button {
+          width: 100%;
+          height: 50px;
+          background-color: #F6F7ED;
+          margin: 20px 0 0 0;
+          color: #171717;
+          position: relative;
+          overflow: hidden;
+          font-size: 14px;
+          letter-spacing: 1px;
+          font-weight: 600;
+          text-transform: uppercase;
+          transition: all 0.3s ease;
+          cursor: pointer;
+          border: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 3px;
+        }
+        .buttons button:before, .buttons button:after {
+          content: "";
+          position: absolute;
+          width: 0;
+          height: 2px;
+          background-color: #171717;
+          transition: all 0.3s cubic-bezier(0.35, 0.1, 0.25, 1);
+        }
+        .buttons button:before {
+          right: 0;
+          top: 0;
+          transition: all 0.5s cubic-bezier(0.35, 0.1, 0.25, 1);
+        }
+        .buttons button:after {
+          left: 0;
+          bottom: 0;
+        }
+        .buttons button span {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          top: 0;
+          margin: 0;
+          padding: 0;
+          z-index: 1;
+        }
+        .buttons button span:before, .buttons button span:after {
+          content: "";
+          position: absolute;
+          width: 2px;
+          height: 0;
+          background-color: #171717;
+          transition: all 0.3s cubic-bezier(0.35, 0.1, 0.25, 1);
+        }
+        .buttons button span:before {
+          right: 0;
+          top: 0;
+          transition: all 0.5s cubic-bezier(0.35, 0.1, 0.25, 1);
+        }
+        .buttons button span:after {
+          left: 0;
+          bottom: 0;
+        }
+        .buttons button p {
+          padding: 0;
+          margin: 0;
+          transition: all 0.4s cubic-bezier(0.35, 0.1, 0.25, 1);
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
+        .buttons button p:before, .buttons button p:after {
+          position: absolute;
+          width: 100%;
+          transition: all 0.4s cubic-bezier(0.35, 0.1, 0.25, 1);
+          z-index: 1;
+          left: 0;
+        }
+        .buttons button p:before {
+          content: attr(data-title);
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        .buttons button p:after {
+          content: attr(data-text);
+          top: 150%;
+          color: #171717;
+        }
+        .buttons button:hover:before, .buttons button:hover:after {
+          width: 100%;
+        }
+        .buttons button:hover span:before, .buttons button:hover span:after {
+          height: 100%;
+        }
+        .buttons button:hover p:before {
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        .buttons button:hover p:after {
+          top: 150%;
+          transform: none;
+        }
+        .buttons button:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+        .buttons button:active {
+          outline: none;
+          border: none;
+        }
+        .buttons button:focus {
+          outline: 0;
+        }
+      `}</style>
     </form>
   );
 }
