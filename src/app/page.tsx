@@ -87,7 +87,7 @@ export default function Home() {
 
           {/* heading — matched to timer/field width (440px) */}
           <h1 className="mt-6 sm:mt-8 font-['Satoshi',sans-serif] w-full max-w-[440px] text-center text-[2.92rem] leading-[0.95] sm:text-[3.45rem] md:text-[4.05rem] lg:text-[4.42rem] xl:text-[4.72rem] font-bold tracking-[-0.03em] text-[#F6F7ED] whitespace-nowrap">
-            Jobs That <span className="italic">Fit</span>
+            Jobs That Fit
           </h1>
 
           {/* launch timer — matched to field width (440px) */}
