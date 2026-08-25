@@ -59,19 +59,16 @@ export function WaitlistForm() {
           <h3 className="mt-4 text-base font-semibold text-white">
             {success.alreadyExists ? `You’re already on the list, ${success.name}!` : `You’re in, ${success.name}! 🎉`}
           </h3>
-          <p className="mt-1 text-sm leading-6 text-zinc-400">
-            {success.alreadyExists
-              ? `We found you! You’re still secured at position `
-              : `Welcome to the waitlist. Check your inbox at `}
-            {!success.alreadyExists && (
-              <span className="font-medium text-zinc-200">{success.email}</span>
-            )}
-            {!success.alreadyExists && ` — we’ve sent a confirmation.`}
-          </p>
+          {!success.alreadyExists && (
+            <p className="mt-1 text-sm leading-6 text-zinc-400">
+              Welcome to the waitlist. Check your inbox at <span className="font-medium text-zinc-200">{success.email}</span> — we’ve sent a confirmation.
+            </p>
+          )}
 
           <div className="mt-6 text-center">
-            <div className="text-xs font-semibold tracking-widest text-zinc-500 uppercase">Your Position</div>
-            <div className="mt-1 text-4xl font-bold tracking-tight text-white">#{success.position}</div>
+            <div className="mt-1 text-[22px] sm:text-[26px] font-bold tracking-tight text-white leading-tight">
+              You are all in along with <br></br>{1316 + success.position} users.
+            </div>
           </div>
 
           <p className="mt-4 text-xs leading-5 text-zinc-500">
@@ -101,7 +98,7 @@ export function WaitlistForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-[10px] w-full bg-transparent" noValidate>
+    <form onSubmit={onSubmit} className="flex flex-col gap-[18px] w-full bg-transparent" noValidate>
       <div className="field">
         <input
           id="name"
@@ -153,13 +150,13 @@ export function WaitlistForm() {
           align-items: center;
           justify-content: center;
           gap: 0.5em;
-          border-radius: 25px;
-          padding: 0.6em;
-          border: none;
+          border-radius: 4px;
+          padding: 0.75em 1em;
+          border: 1px solid #F6F7ED;
           outline: none;
           color: white;
-          background-color: #171717;
-          box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+          background-color: #000000;
+          box-shadow: none;
         }
         .input-field {
           background: none;
@@ -167,7 +164,12 @@ export function WaitlistForm() {
           outline: none;
           width: 100%;
           color: #d3d3d3;
-          font-size: 14px;
+          font-size: 16px;
+        }
+        @media (min-width: 640px) {
+          .input-field {
+            font-size: 14px;
+          }
         }
         .input-field::placeholder {
           color: #8a8a8a;
@@ -181,10 +183,11 @@ export function WaitlistForm() {
           width: 100%;
         }
         .buttons button {
-          width: 100%;
+          width: 60%;
+          max-width: 216px;
           height: 50px;
           background-color: #F6F7ED;
-          margin: 20px 0 0 0;
+          margin: 32px auto 0 auto;
           color: #171717;
           position: relative;
           overflow: hidden;
@@ -293,6 +296,20 @@ export function WaitlistForm() {
         }
         .buttons button:focus {
           outline: 0;
+        }
+        @media (max-width: 640px) {
+          .field {
+            padding: 0.75em 0.9em;
+            border-radius: 4px;
+          }
+          .input-field {
+            font-size: 16px;
+          }
+          .buttons button {
+            height: 52px;
+            font-size: 15px;
+            letter-spacing: 0.8px;
+          }
         }
       `}</style>
     </form>

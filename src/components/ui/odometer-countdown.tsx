@@ -187,7 +187,7 @@ function OdometerDigit({
               fontWeight: 800,
               lineHeight: 1,
               fontVariantNumeric: "tabular-nums",
-              fontFamily: "var(--font-display), ui-monospace, SFMono-Regular, Menlo, monospace",
+              fontFamily: "'Satoshi', sans-serif",
               color: "#f4f4f5",
               textShadow: "0 1px 0 rgba(0,0,0,0.8), 0 0 12px rgba(255,255,255,0.06)",
               transform: "translateZ(0)",
@@ -317,7 +317,7 @@ export function OdometerCountdown({
                 color: "rgba(244,244,245,0.95)",
                 fontVariantNumeric: "tabular-nums",
                 textShadow: "0 1px 0 rgba(0,0,0,0.8)",
-                fontFamily: "var(--font-display), monospace",
+                fontFamily: "'Satoshi', sans-serif",
                 userSelect: "none",
               }}
               aria-hidden="true"
