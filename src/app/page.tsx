@@ -1,11 +1,53 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import CursorRingField from "@/components/ui/cursor-ring-field";
+import { OdometerCountdown } from "@/components/ui/odometer-countdown";
+
+const LAUNCH_DATE = new Date("2026-09-10T12:00:00").getTime();
+
+function formatLaunchRemaining(ms: number) {
+  const totalSec = Math.max(0, Math.floor(ms / 1000));
+  const days = Math.floor(totalSec / 86400);
+  const hours = Math.floor((totalSec % 86400) / 3600);
+  const mins = Math.floor((totalSec % 3600) / 60);
+  const secs = totalSec % 60;
+  const dd = String(days).padStart(2, "0");
+  const hh = String(hours).padStart(2, "0");
+  const mm = String(mins).padStart(2, "0");
+  const ss = String(secs).padStart(2, "0");
+  return `${dd}:${hh}:${mm}:${ss}`;
+}
 
 export default function Home() {
   const [open, setOpen] = useState(false);
+  // Hydration-safe: server and client initially render same placeholder, real time set after mount
+  const [timeStr, setTimeStr] = useState("00:00:00:00");
+  const [prevTimeStr, setPrevTimeStr] = useState("00:00:00:00");
+  const [mounted, setMounted] = useState(false);
+
+  // Keep latest timeStr in ref to avoid stale closure in interval
+  const timeStrRef = useRef(timeStr);
+  useEffect(() => {
+    timeStrRef.current = timeStr;
+  }, [timeStr]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration: must set mounted after client mount
+    setMounted(true);
+    const tick = () => {
+      const next = formatLaunchRemaining(LAUNCH_DATE - Date.now());
+      const prev = timeStrRef.current;
+      if (next !== prev) {
+        setPrevTimeStr(prev);
+        setTimeStr(next);
+      }
+    };
+    tick();
+    const id = window.setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -66,8 +108,33 @@ export default function Home() {
               </button>
             </div>
 
-            {/* right — empty for later use */}
-            <div className="hidden lg:block" aria-hidden="true" />
+            {/* right — Launch timer */}
+            <div className="flex flex-col items-start lg:items-start lg:pl-12" suppressHydrationWarning>
+              <span className="text-[10px] tracking-[0.18em] uppercase font-semibold text-zinc-500">Launch in</span>
+              <div className="mt-3" suppressHydrationWarning>
+                {mounted ? (
+                  <OdometerCountdown
+                    value={timeStr}
+                    prevValue={prevTimeStr}
+                    duration={320}
+                    gap={6}
+                    digitWidth={36}
+                    digitHeight={52}
+                    fontSize="24px"
+                  />
+                ) : (
+                  <OdometerCountdown
+                    value="00:00:00:00"
+                    prevValue="00:00:00:00"
+                    duration={320}
+                    gap={6}
+                    digitWidth={36}
+                    digitHeight={52}
+                    fontSize="24px"
+                  />
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </main>

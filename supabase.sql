@@ -36,6 +36,30 @@ create policy "Allow anon insert"
 
 -- For service_role bypass, no policy needed - service_role bypasses RLS.
 
+-- Fix: position serial does NOT reset on DELETE, so after you delete the first
+-- row (e.g. position 1) the next insert becomes 2 and looks like "first email is #2".
+-- The API now inserts with MAX(position)+1, but to repair existing data run ONCE:
+-- WITH ranked AS (SELECT id, ROW_NUMBER() OVER (ORDER BY created_at) AS rn FROM public.waitlist)
+-- UPDATE public.waitlist SET position = ranked.rn FROM ranked WHERE waitlist.id = ranked.id;
+-- SELECT setval('public.waitlist_position_seq', COALESCE((SELECT MAX(position) FROM public.waitlist),0));
+
+-- Keep position contiguous even if inserted without explicit value (fallback for direct SQL)
+create or replace function public.set_waitlist_position()
+returns trigger
+language plpgsql
+as $$
+begin
+  if NEW.position is null then
+    SELECT COALESCE(MAX(position),0)+1 INTO NEW.position FROM public.waitlist;
+  end if;
+  return NEW;
+end;
+$$;
+drop trigger if exists waitlist_position_trigger on public.waitlist;
+create trigger waitlist_position_trigger
+  before insert on public.waitlist
+  for each row execute function public.set_waitlist_position();
+
 -- Optional: function to get count
 create or replace function public.waitlist_count()
 returns bigint

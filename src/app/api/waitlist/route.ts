@@ -73,10 +73,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Insert new entry
+    // Insert new entry — use MAX(position)+1 so first entry after empty/deleted is #1
+    // `position` is a serial (nextval) which does NOT reset on DELETE, so a deleted
+    // row with #1 would make the next insert #2. Using MAX+1 keeps the queue
+    // contiguous and fixes "first email is #2".
+    const { data: maxPos } = await supabaseAdmin
+      .from("waitlist")
+      .select("position")
+      .order("position", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    const nextPosition = (maxPos?.position ?? 0) + 1;
+
     const { data: inserted, error: insertErr } = await supabaseAdmin
       .from("waitlist")
-      .insert({ name, email, ip_address: ip, user_agent: userAgent })
+      .insert({ name, email, ip_address: ip, user_agent: userAgent, position: nextPosition })
       .select("id, name, email, position, created_at")
       .single();
 

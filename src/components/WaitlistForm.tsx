@@ -50,51 +50,52 @@ export function WaitlistForm() {
   if (success) {
     return (
       <div className="rounded-2xl border border-violet-500/20 bg-zinc-900/80 backdrop-blur p-6 sm:p-7 shadow-2xl shadow-violet-500/10">
-        <div className="flex items-start gap-4">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/20">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <div className="flex flex-col items-center text-center">
+          <div className="tick-pop flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg shadow-emerald-500/20 ring-4 ring-emerald-500/20">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20 6L9 17l-5-5" />
             </svg>
           </div>
-          <div className="min-w-0 flex-1">
-            <h3 className="text-base font-semibold text-white">
-              {success.alreadyExists ? `You’re already on the list, ${success.name}!` : `You’re in, ${success.name}! 🎉`}
-            </h3>
-            <p className="mt-1 text-sm leading-6 text-zinc-400">
-              {success.alreadyExists
-                ? `We found your previous registration. You’re still secured at position `
-                : `Welcome to the waitlist. Check your inbox at `}
-              {!success.alreadyExists && (
-                <span className="font-medium text-zinc-200">{success.email}</span>
-              )}
-              {!success.alreadyExists && ` — we’ve sent a confirmation.`}
-            </p>
+          <h3 className="mt-4 text-base font-semibold text-white">
+            {success.alreadyExists ? `You’re already on the list, ${success.name}!` : `You’re in, ${success.name}! 🎉`}
+          </h3>
+          <p className="mt-1 text-sm leading-6 text-zinc-400">
+            {success.alreadyExists
+              ? `We found you! You’re still secured at position `
+              : `Welcome to the waitlist. Check your inbox at `}
+            {!success.alreadyExists && (
+              <span className="font-medium text-zinc-200">{success.email}</span>
+            )}
+            {!success.alreadyExists && ` — we’ve sent a confirmation.`}
+          </p>
 
-            <div className="mt-5 grid grid-cols-2 gap-3">
-              <div className="rounded-xl bg-zinc-950 border border-zinc-800 p-4">
-                <div className="text-[10px] font-semibold tracking-widest text-zinc-500 uppercase">Your Position</div>
-                <div className="mt-1 text-2xl font-bold tracking-tight text-white">#{success.position}</div>
-                <div className="text-xs text-zinc-500">Queue • FCFS</div>
-              </div>
-              <div className="rounded-xl bg-zinc-950 border border-zinc-800 p-4">
-                <div className="text-[10px] font-semibold tracking-widest text-zinc-500 uppercase">Waitlist ID</div>
-                <div className="mt-1 font-mono text-sm font-medium text-white truncate">{success.id.slice(0, 8)}</div>
-                <div className="text-[11px] text-zinc-500 truncate" title={success.id}>{success.id}</div>
-              </div>
-            </div>
-
-            <p className="mt-4 text-xs leading-5 text-zinc-500">
-              We’ll email you at <span className="text-zinc-300">{success.email}</span> when early access opens. Keep this ID for reference.
-            </p>
-
-            <button
-              onClick={() => setSuccess(null)}
-              className="mt-5 text-sm font-medium text-violet-400 hover:text-violet-300 transition"
-            >
-              Join another email →
-            </button>
+          <div className="mt-6 text-center">
+            <div className="text-xs font-semibold tracking-widest text-zinc-500 uppercase">Your Position</div>
+            <div className="mt-1 text-4xl font-bold tracking-tight text-white">#{success.position}</div>
           </div>
+
+          <p className="mt-4 text-xs leading-5 text-zinc-500">
+            We’ll email you at <span className="text-zinc-300">{success.email}</span> with the latest updates.
+          </p>
+
+          <button
+            onClick={() => setSuccess(null)}
+            className="mt-5 text-sm font-medium text-violet-400 hover:text-violet-300 transition"
+          >
+            Join another email →
+          </button>
         </div>
+        <style>{`
+          .tick-pop {
+            animation: tickPop 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+          }
+          @keyframes tickPop {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.18); opacity: 1; }
+            75% { transform: scale(0.92); }
+            100% { transform: scale(1); opacity: 1; }
+          }
+        `}</style>
       </div>
     );
   }

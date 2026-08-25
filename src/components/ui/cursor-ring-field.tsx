@@ -1,6 +1,7 @@
 // Cursor Ring Field — Originkit
 // Using component defaults.
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import * as React from "react"
@@ -819,6 +820,8 @@ export default function CursorRingField(props: CursorRingFieldProps) {
     }
 
     const live = useRef<any>({})
+    // Precise Originkit impl: live ref updated during render to avoid effect deps rebuild (intentional)
+    // eslint-disable-next-line react-hooks/refs
     live.current = {
         colors: flatColors,
         colorCount: swatches.length,
@@ -837,8 +840,12 @@ export default function CursorRingField(props: CursorRingFieldProps) {
     // loop rebuilds buffers + textures in place.
     const densityRef = useRef(density)
     const densityDirty = useRef(true)
+    // Density change must not rebuild GL context — dirty flag checked in rAF loop (intentional render-phase ref write)
+    // eslint-disable-next-line react-hooks/refs
     if (densityRef.current !== density) {
+        // eslint-disable-next-line react-hooks/refs
         densityRef.current = density
+        // eslint-disable-next-line react-hooks/refs
         densityDirty.current = true
     }
 
@@ -896,7 +903,6 @@ export default function CursorRingField(props: CursorRingFieldProps) {
             )
         } catch (e) {
             // A compile failure must not take the app down with it.
-            // eslint-disable-next-line no-console
             console.warn("CursorRingField:", (e as Error).message)
             return
         }
