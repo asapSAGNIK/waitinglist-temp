@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { WaitlistForm } from "@/components/WaitlistForm";
-import CursorRingField from "@/components/ui/cursor-ring-field";
+import { ParticleWave } from "@/components/ui/particle-wave";
 import { OdometerCountdown } from "@/components/ui/odometer-countdown";
 
 const LAUNCH_DATE = new Date("2026-09-10T12:00:00").getTime();
@@ -61,14 +61,13 @@ export default function Home() {
 
   return (
     <div className="flex min-h-[100dvh] min-h-screen flex-col bg-[#09090b] text-zinc-100 overflow-x-hidden">
-      <CursorRingField
-        density={isMobile ? 160 : 240}
-        dotSize={isMobile ? 160 : 90}
-        speed={isMobile ? 12 : 13}
-        cameraDistance={isMobile ? 180 : 120}
-        colors={["#00FFDA", "#FFF500"]}
-        style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, opacity: isMobile ? 0.9 : 0.5, pointerEvents: "none" }}
-      />
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{ opacity: isMobile ? 0.9 : 0.5 }}
+        aria-hidden="true"
+      >
+        <ParticleWave />
+      </div>
 
       <main className="relative z-10 flex flex-1 items-center justify-center px-4 sm:px-6">
         <div className="mx-auto w-full max-w-6xl py-6 sm:py-10 lg:py-14 flex flex-col items-center text-center">

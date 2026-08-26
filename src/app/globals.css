@@ -12,6 +12,15 @@
   --font-mono: 'Satoshi', sans-serif;
 }
 
+@font-face {
+  font-family: 'Bilderberg';
+  src: url('/bilderberg.italic.otf') format('opentype'),
+       url('/bliderberg.italic.otf') format('opentype');
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
 * {
   scrollbar-width: thin;
   scrollbar-color: #27272a transparent;
@@ -35,6 +44,12 @@ body {
 
 * {
   font-family: 'Satoshi', sans-serif !important;
+}
+
+.font-bilderberg {
+  font-family: 'Bilderberg', serif !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
 }
 
 /* Mobile: prevent iOS zoom, improve tap */

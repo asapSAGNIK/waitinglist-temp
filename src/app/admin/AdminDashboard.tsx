@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import CursorRingField from "@/components/ui/cursor-ring-field";
+import { ParticleWave } from "@/components/ui/particle-wave";
 
 type Entry = {
   id: string;
@@ -91,14 +91,9 @@ export function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-[#09090b] text-zinc-100 overflow-hidden relative">
-      <CursorRingField
-        density={240}
-        dotSize={90}
-        speed={13}
-        cameraDistance={120}
-        colors={["#00FFDA", "#FFF500"]}
-        style={{ position: "fixed", inset: 0, opacity: 0.5 }}
-      />
+      <div className="fixed inset-0 pointer-events-none" style={{ opacity: 0.5 }} aria-hidden="true">
+        <ParticleWave />
+      </div>
       <header className="sticky top-0 z-10 backdrop-blur-xl bg-zinc-950/60 border-b border-zinc-800">
         <div className="mx-auto max-w-6xl px-6 h-[64px] flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">

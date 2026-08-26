@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { ParticleWave } from "@/components/ui/particle-wave";
 
 export default function AdminLogin() {
   const [password, setPassword] = useState("");
@@ -33,14 +34,20 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#09090b] px-6 py-16 relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(120,90,255,0.2),transparent)]" />
-      <div className="relative w-full max-w-sm">
+      <div className="fixed inset-0 pointer-events-none" style={{ opacity: 0.5 }} aria-hidden="true">
+        <ParticleWave />
+      </div>
+      <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 text-sm font-medium text-zinc-400 hover:text-white">
             ← Back to site
           </Link>
-          <div className="mt-6 mx-auto h-10 w-10 rounded-xl bg-gradient-to-br from-violet-600 to-cyan-400 flex items-center justify-center font-bold text-white">◆</div>
-          <h1 className="mt-4 text-xl font-semibold text-white tracking-tight">Admin Access</h1>
+          <div className="mt-6 flex items-center justify-center gap-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/Uphook%20logo.png" alt="Uphook logo" className="h-10 w-10 object-contain rounded-lg" width={40} height={40} />
+            <span className="font-semibold tracking-tight text-white">Uphook</span>
+          </div>
+          <h1 className="mt-4 text-xl font-semibold text-white tracking-tight font-['Satoshi',sans-serif]">Admin Access</h1>
           <p className="mt-2 text-sm text-zinc-400">Enter the admin password to view the waitlist.</p>
         </div>
 
