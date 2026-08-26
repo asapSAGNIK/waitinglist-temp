@@ -54,10 +54,10 @@ export default function Home() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Responsive odometer sizing
+  // Responsive odometer sizing — calibrated to match 440px field edges
   const timerConfig = isMobile
-    ? { digitWidth: 26, digitHeight: 38, fontSize: "16px", gap: 4 }
-    : { digitWidth: 44, digitHeight: 64, fontSize: "30px", gap: 8 };
+    ? { digitWidth: 30, digitHeight: 44, fontSize: "18px", gap: 5 }
+    : { digitWidth: 45, digitHeight: 64, fontSize: "30px", gap: 8 };
 
   return (
     <div className="flex min-h-[100dvh] min-h-screen flex-col bg-[#09090b] text-zinc-100 overflow-x-hidden">
@@ -84,9 +84,9 @@ export default function Home() {
             <span className="font-semibold tracking-tight text-white text-xl sm:text-2xl">Uphook</span>
           </div>
 
-          {/* heading — matched to timer/field width (440px) */}
-          <h1 className="mt-6 sm:mt-8 font-['Satoshi',sans-serif] w-full max-w-[440px] text-center text-[2.92rem] leading-[0.95] sm:text-[3.45rem] md:text-[4.05rem] lg:text-[4.42rem] xl:text-[4.72rem] font-bold tracking-[-0.03em] text-[#F6F7ED] whitespace-nowrap">
-            Jobs That Fit
+          {/* heading — matched to timer/field width (440px) — increased */}
+          <h1 className="mt-6 sm:mt-8 font-['Satoshi',sans-serif] w-full max-w-[440px] text-center text-[3.05rem] leading-[0.95] sm:text-[3.65rem] md:text-[4.25rem] lg:text-[4.65rem] xl:text-[4.95rem] font-bold tracking-[-0.03em] text-[#F6F7ED] whitespace-nowrap">
+            Jobs that fit
           </h1>
 
           {/* launch timer — matched to field width (440px) */}
